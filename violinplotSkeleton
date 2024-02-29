@@ -1,0 +1,14 @@
+% data = data
+% group = group
+[~,~,scatterpositions] = unique(group)
+figure
+set(gcf,'visible','on')
+violins = violinplot(data,group,'ViolinAlpha', 0.05,'ViolinColor',[0 0 0],'ShowData',false);
+jit = randn(1,length(data))*0.06;
+jit = jit(:);
+scatter(scatterpositions+jit,data,20,'filled','k','MarkerFaceAlpha',0.15);
+hold on
+boxplot(data,group,'Notch','off','symbol','');
+[~,~,stats] = kruskalwallis(data,group)
+c = multcompare(stats,'Ctype','bonferroni')
+view([270 90])
