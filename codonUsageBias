@@ -1,6 +1,5 @@
 % "seqstring" = your list of sequence alignments
 % "cluster" = how you want to group your sequences
-% I truthfully have no idea how this works I wrote it when I was very drunk
 for group = 1:1:max(cluster);
     seqgroups{group} = seqstring(find(cluster==group));
     for i = 1:1:size(seqgroups{group},1);
@@ -68,7 +67,6 @@ for findam = 1:1:21;
     sgtitle(mastermatnums{1,aminumidx(1)});
     clear('aminumidx','codonidx','findam','group','groupvals','i','subplots','x','y','yvals');
 end
-
 for findam = 1:1:21
     aminumidx = find(mastermat(4,:) == findam);
     codonidx = [];
@@ -95,7 +93,6 @@ for findam = 1:1:21
         end
     end
 end
-
 for findam = 1:1:21
     if pair{findam,1}== [0,0,0]
         % shared(:,findam) = 1
@@ -107,11 +104,9 @@ for findam = 1:1:21
 end
 % the above matrix lists the number of shared codon preferences for each
 % amino acid from 1:21, one per column
-
 total = sum(shared,2)
 total(:,2) = pair{1,1}(:,2)
 total(:,3) = pair{1,1}(:,3)
-
 figure
 set(gcf,'visible','on')
 HANDLE = gca
