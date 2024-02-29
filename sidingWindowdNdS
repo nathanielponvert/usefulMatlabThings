@@ -1,0 +1,39 @@
+t = tiledlayout(5,1,'Padding','tight','TileSpacing','tight')
+set(gcf,'visible','on')
+for group = 1:1:5;
+    seqgroups = seqs(find(cluster==group));
+    pairings(:,:) = nchoosek(1:1:size(seqgroups,1),2);
+    size1 = [15,30,60]
+    for num = 1:1:size(size1,2);
+        for i = 1:1:size(pairings,1);
+            [dn1, ds1, vardn1, vards1] = dnds(seqgroups(pairings(i,1),1), seqgroups(pairings(i,2),1), 'window',size1(num),'verbose','true');
+            dn(i,1) = pairings(i,1);
+            dn(i,2) = pairings(i,2);
+            dn1 = dn1';
+            dn(i,3:size(dn1,2)+2) = dn1;
+            ds(i,1) = pairings(i,1);
+            ds(i,2) = pairings(i,2);
+            ds1 = ds1';
+            ds(i,3:size(ds1,2)+2) = ds1;
+        end
+        meandnds{num} = mean(dn(:,3:end))./mean(ds(:,3:end));
+    end
+    nexttile
+    hold on
+    plot(meandnds{1}, 'r');
+    plot(meandnds{2}, 'g');
+    plot(meandnds{3}, 'b');
+    line([0 size(ds(:,3:end),2)],[1 1],'LineStyle',':');
+    ylim([-0.1 5]);
+    ylabel('dn / ds');
+    xlabel('sliding window (starting codon)');
+    % line([263 263],[0 5],'Color','k')
+    % line([909 909],[0 5],'Color','k')
+    % line([1229 1229],[0 5],'Color','k')
+    % line([1275 1275],[0 5],'Color','k')
+    % line([1477 1477],[0 5],'Color','k')
+    % line([1652 1652],[0 5],'Color','k')
+    % line([2350 2350],[0 5],'Color','k')
+    clear('pairings','dn','dn1','ds','ds1','group','i','size1','vards1',...
+        'vards2','vardn1','vardn2','meandnds');
+end
